@@ -7,7 +7,18 @@ import { BsGithub } from "react-icons/bs";
 function ProjectCards(props) {
   return (
     <Card className="project-card-view">
-      <Card.Img variant="top" src={props.imgPath} alt="card-img" />
+<Card.Img
+  variant="top"
+  src={props.imgPath}
+  alt="card-img"
+  style={{
+    width: '400px',
+    height: '300px',
+    objectFit: 'cover',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+  }}
+/>
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Card.Text style={{ textAlign: "justify" }}>

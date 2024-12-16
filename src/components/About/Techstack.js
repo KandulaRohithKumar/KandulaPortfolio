@@ -1,6 +1,8 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { CgCPlusPlus } from "react-icons/cg";
+import { FaJava } from "react-icons/fa";
+import springBootLogo from "../About/spring.png"; // Replace with your image path
+
 import {
   DiJavascript1,
   DiReact,
@@ -8,61 +10,61 @@ import {
   DiMongodb,
   DiPython,
   DiGit,
-  DiJava,
 } from "react-icons/di";
 import {
-  SiRedis,
-  SiFirebase,
-  SiNextdotjs,
-  SiSolidity,
   SiPostgresql,
 } from "react-icons/si";
-import { TbBrandGolang } from "react-icons/tb";
+import { IoLogoHtml5, IoLogoCss3 } from "react-icons/io";
 
 function Techstack() {
   return (
     <Row style={{ justifyContent: "center", paddingBottom: "50px" }}>
       <Col xs={4} md={2} className="tech-icons">
-        <CgCPlusPlus />
+  <FaJava style={{ color: '#007396' }} />
+</Col>
+<Col xs={4} md={2} className="tech-icons">
+  <DiJavascript1 style={{ color: '#F7DF1E' }} />
+</Col>
+      <Col xs={4} md={2} className="tech-icons">
+  <div style={{ position: 'relative' }}>
+    <img src={springBootLogo} alt="Spring Boot Logo" style={{ height: '50px' }} />
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'black',
+      opacity: 0.5,
+      zIndex: 1
+    }} />
+  </div>
+</Col>
+<Col xs={4} md={2} className="tech-icons">
+  <DiNodejs style={{ color: '#68A063' }} />
+</Col>
+<Col xs={4} md={2} className="tech-icons">
+  <DiReact style={{ color: '#61DAFB' }} />
+</Col>
+<Col xs={4} md={2} className="tech-icons">
+  <DiMongodb style={{ color: '#47A248' }} />
+</Col>
+
+<Col xs={4} md={2} className="tech-icons">
+  <DiGit style={{ color: '#F1502F' }} />
+</Col>
+
+      <Col xs={4} md={2} className="tech-icons">
+  <SiPostgresql style={{ color: '#336791' }} />
+</Col>
+      <Col xs={4} md={2} className="tech-icons">
+  <DiPython style={{ color: '#3776AB' }} />
+</Col>
+      <Col xs={4} md={2} className="tech-icons" >
+      <IoLogoHtml5  color="#E34F26"  />
       </Col>
       <Col xs={4} md={2} className="tech-icons">
-        <DiJavascript1 />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <TbBrandGolang />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiNodejs />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiReact />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiSolidity />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiMongodb />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiNextdotjs />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiGit />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiFirebase />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiRedis />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <SiPostgresql />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiPython />
-      </Col>
-      <Col xs={4} md={2} className="tech-icons">
-        <DiJava />
+      <IoLogoCss3   color="#1572B6" />
       </Col>
     </Row>
   );
