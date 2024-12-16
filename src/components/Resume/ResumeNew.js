@@ -78,7 +78,7 @@ function ResumeNew() {
         
         <Row className="resume justify-content-center">
           <Document 
-            file="/resume.pdf"  // Path to PDF in the public folder
+            file="/resumes.pdf"  // Path to PDF in the public folder
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={onDocumentLoadError}
             className="d-flex flex-column align-items-center"
