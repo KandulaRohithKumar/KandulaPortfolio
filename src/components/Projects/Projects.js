@@ -71,8 +71,7 @@ function Projects() {
               imgPath={emotion}
               isBlog={false}
               title="Car Show Room Management"
-              description="The Car Showroom Management System is a Java EE project designed to manage the operations of a car showroom efficiently. It is deployed on the Red Hat JBoss EAP Server and uses MySQL for storing data.
-              Then used Open-CV to detect the face in an image and then pass the face to the classifer to predict the emotion of a person."
+              description="The Car Showroom Management System is a Java EE project designed to manage the operations of a car showroom efficiently. It is deployed on the Red Hat JBoss EAP Server and uses MySQL for storing data."
               ghLink="https://github.com/klu-2200030106/Online-Car-Show-Room-Management"
               // demoLink="https://blogs.soumya-jit.tech/"      <--------Please include a demo link here 
             />
