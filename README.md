@@ -15,8 +15,6 @@ My personal portfolio <a href="https://kandula-portfolio.vercel.app/" target="_b
 This project was built using these technologies.
 
 - React.js
-- Node.js
-- Express.js
 - CSS3
 - VsCode
 - Vercel
