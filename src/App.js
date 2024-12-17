@@ -10,7 +10,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
@@ -20,14 +20,38 @@ import Certifications from "./components/Certifications/Certifications";
 import Contact from "./components/Contact/Contact";
 
 function App() {
-  const [load, upadateLoad] = useState(true);
+  const [load, updateLoad] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      upadateLoad(false);
+      updateLoad(false);
     }, 1200);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Disable right-click and developer tools
+  useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault(); // Disable right-click
+    const handleKeyDown = (e) => {
+      if (
+        e.ctrlKey &&
+        (e.key === "u" || e.key === "U" || e.key === "i" || e.key === "I")
+      ) {
+        e.preventDefault();
+      }
+      if (e.key === "F12" || e.keyCode === 123) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
@@ -43,7 +67,7 @@ function App() {
           <Route path="/resume" element={<Resume />} />
           <Route path="/certify" element={<Certifications />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<Navigate to="/"/>} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />
       </div>
