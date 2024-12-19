@@ -28,14 +28,16 @@ function Techstack() {
       <Col xs={4} md={2} className="tech-icons">
   <div style={{ position: 'relative' }}>
   <img 
-    src={springBootLogo} 
-    alt="Spring Boot Logo" 
-    style={{ 
-      height: '50px', 
-      backgroundColor: 'black', 
-      mixBlendMode: 'multiply' 
-    }} 
-  />    <div style={{
+  src={springBootLogo} 
+  alt="Spring Boot Logo" 
+  style={{ 
+    height: '9%', // Responsive size
+    maxHeight: '90px', // Optional cap on size
+    backgroundColor: 'black', 
+    mixBlendMode: 'multiply' 
+  }} 
+/>
+<div style={{
       position: 'absolute',
       top: 0,
       left: 0,
