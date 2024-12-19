@@ -6,6 +6,8 @@ import About from "./components/About/About";
 import Projects from "./components/Projects/Projects";
 import Footer from "./components/Footer";
 import Resume from "./components/Resume/ResumeNew";
+import CustomCursor from "./components/CustomCursor";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -56,6 +58,8 @@ function App() {
 
   return (
     <Router>
+            <CustomCursor /> {/* Add this line right after <Router> */}
+
       <Preloader load={load} />
       <div className="App" id={load ? "no-scroll" : "scroll"}>
         <Navbar />
