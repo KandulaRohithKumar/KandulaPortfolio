@@ -32,7 +32,7 @@ function Techstack() {
   alt="Spring Boot Logo" 
   style={{ 
     height: '50px', 
-    filter: 'brightness(0%)' 
+    filter: 'grayscale(100%) brightness(50%) contrast(80%)' 
   }} 
 />
     <div style={{
