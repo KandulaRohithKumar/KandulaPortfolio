@@ -8,6 +8,7 @@ import googleCloudCert from "../../Assets/Certifications/google-cloud.png";
 import awsCert from "../../Assets/Certifications/aws-cert.png";
 import microsoftCert from "../../Assets/Certifications/microsoft-cert.png";
 import redhat from "../../Assets/Certifications/red-hat.png";
+import si from "../../Assets/Certifications/Salesforce.jpeg";
 
 function Certifications() {
   return (
@@ -67,6 +68,19 @@ function Certifications() {
               earnedDate="6 November 2024"
             />
           </Col>
+
+          <Col md={4} className="certification-card">
+  <CertificationCard
+    imgPath={si}
+    title="Salesforce Certified AI Associate"
+    description="Achieved the Salesforce Certified AI Associate certification, demonstrating knowledge of AI concepts, ethical considerations, and Salesforce's AI capabilities."
+    certificateLink="https://trailhead.salesforce.com/en/credentials/certification-detail-print/?searchString=h1tXa69pdl5NSk9leqYGv1P3VFjaultJJgDs8zZzVdQVuNGn2kG+42cXBiCuHEXl"
+    earnedDate="19 October 2024"
+  />
+</Col>
+
+
+
         </Row>
       </Container>
     </Container>
