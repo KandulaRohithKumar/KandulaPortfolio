@@ -75,7 +75,11 @@ function ResumeNew() {
     <div>
       <Container fluid className="resume-section">
         <Particle />
-        
+        <h1 style={{ textAlign: "center", fontSize: "3rem" }}>
+  <span style={{ color: "white", fontWeight: "bold" }}>My</span>{" "}
+  <span style={{ color: "purple" }}>Resume🧑‍💻</span>
+</h1>
+
         <Row className="resume justify-content-center">
           <Document 
             file="/resumes.pdf"  // Path to PDF in the public folder
