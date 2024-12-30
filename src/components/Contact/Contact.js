@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Toast } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
 import Particle from "../Particle";
 
@@ -9,7 +9,8 @@ function Contact() {
     email: '',
     message: ''
   });
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState({ type: '', message: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +22,6 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitStatus(null);
 
     try {
       const response = await fetch('https://formspree.io/f/myzzgawd', {
@@ -33,15 +33,22 @@ function Contact() {
       });
 
       if (response.ok) {
-        setSubmitStatus('success');
+        setToastMessage({
+          type: 'success',
+          message: '✅ Message sent successfully!'
+        });
         setFormData({ name: '', email: '', message: '' });
       } else {
         throw new Error('Failed to submit form');
       }
     } catch (error) {
-      setSubmitStatus('error');
+      setToastMessage({
+        type: 'error',
+        message: '❌ Failed to send message. Please try again.'
+      });
       console.error('Form submission error:', error);
     }
+    setShowToast(true);
   };
 
   return (
@@ -57,12 +64,37 @@ function Contact() {
         }}
       >
         <Particle />
+        
+        {/* Toast Notification */}
+        <div
+          style={{
+            position: 'fixed',
+            top: '70px',
+            right: '20px',
+            zIndex: 1000
+          }}
+        >
+          <Toast 
+            show={showToast} 
+            onClose={() => setShowToast(false)}
+            delay={5000}
+            autohide
+            style={{
+              background: toastMessage.type === 'success' ? '#198754' : '#dc3545',
+              color: 'white'
+            }}
+          >
+            <Toast.Body className="d-flex align-items-center">
+              <span style={{ marginRight: '12px' }}>{toastMessage.message}</span>
+            </Toast.Body>
+          </Toast>
+        </div>
+
         <Container style={{ position: 'relative', zIndex: 1 }}>
           <h1 className="contact-heading mb-5">
             <strong className="purple">Contact Me</strong>
           </h1>
           <Row className="contact-content">
-            {/* Contact Form - Left Side */}
             <Col md={6} className="contact-form-section">
               <div 
                 className="contact-form-wrapper" 
@@ -137,23 +169,9 @@ function Contact() {
                   >
                     Send Message
                   </Button>
-
-                  {submitStatus === 'success' && (
-                    <div className="alert alert-success mt-3 custom-alert">
-                      <span className="alert-icon">✅</span>
-                      <span className="alert-message">Message sent successfully!</span>
-                    </div>
-                  )}
-                  {submitStatus === 'error' && (
-                    <div className="alert alert-danger mt-3 custom-alert">
-                      <span className="alert-icon">❌</span>
-                      <span className="alert-message">Failed to send message. Please try again.</span>
-                    </div>
-                  )}
                 </Form>
               </div>
 
-              {/* Contact Info */}
               <div 
                 className="contact-info mt-4" 
                 style={{ 
@@ -176,7 +194,6 @@ function Contact() {
               </div>
             </Col>
 
-            {/* Google Maps - Right Side */}
             <Col md={6} className="map-section">
               <div 
                 className="map-wrapper" 
