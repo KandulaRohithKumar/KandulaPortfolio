@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Toast } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
+import toast, { Toaster } from 'react-hot-toast';
 import Particle from "../Particle";
 
 function Contact() {
@@ -9,8 +10,6 @@ function Contact() {
     email: '',
     message: ''
   });
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState({ type: '', message: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +22,9 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Show loading toast
+    const loadingToast = toast.loading('Sending message...');
+
     try {
       const response = await fetch('https://formspree.io/f/myzzgawd', {
         method: 'POST',
@@ -33,26 +35,47 @@ function Contact() {
       });
 
       if (response.ok) {
-        setToastMessage({
-          type: 'success',
-          message: '✅ Message sent successfully!'
+        toast.success('Message sent successfully!', {
+          duration: 5000,
+          icon: '✅'
         });
         setFormData({ name: '', email: '', message: '' });
       } else {
         throw new Error('Failed to submit form');
       }
     } catch (error) {
-      setToastMessage({
-        type: 'error',
-        message: '❌ Failed to send message. Please try again.'
+      toast.error('Failed to send message. Please try again.', {
+        duration: 5000,
+        icon: '❌'
       });
       console.error('Form submission error:', error);
+    } finally {
+      toast.dismiss(loadingToast);
     }
-    setShowToast(true);
   };
 
   return (
     <div>
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+          success: {
+            style: {
+              background: '#198754',
+            },
+          },
+          error: {
+            style: {
+              background: '#dc3545',
+            },
+          },
+        }}
+      />
+      
       <Container 
         fluid 
         className="contact-section" 
@@ -65,31 +88,6 @@ function Contact() {
       >
         <Particle />
         
-        {/* Toast Notification */}
-        <div
-          style={{
-            position: 'fixed',
-            top: '70px',
-            right: '20px',
-            zIndex: 1000
-          }}
-        >
-          <Toast 
-            show={showToast} 
-            onClose={() => setShowToast(false)}
-            delay={5000}
-            autohide
-            style={{
-              background: toastMessage.type === 'success' ? '#198754' : '#dc3545',
-              color: 'white'
-            }}
-          >
-            <Toast.Body className="d-flex align-items-center">
-              <span style={{ marginRight: '12px' }}>{toastMessage.message}</span>
-            </Toast.Body>
-          </Toast>
-        </div>
-
         <Container style={{ position: 'relative', zIndex: 1 }}>
           <h1 className="contact-heading mb-5">
             <strong className="purple">Contact Me</strong>
