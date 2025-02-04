@@ -31,10 +31,16 @@ function About() {
             style={{ paddingTop: "120px", paddingBottom: "50px" }}
             className="about-img"
           >
-<img 
-  src={laptopImg} 
-  alt="about" 
-  className="img-fluid mt-[-50px] w-[300px] h-[250px] object-cover rounded-lg"
+     <img
+  src={laptopImg}
+  alt="about"
+  style={{
+    marginTop: "-100px",
+    width: "450px",
+    height: "400px",
+    objectFit: "cover",
+    borderRadius: "10px",
+  }}
 />
           </Col>
         </Row>
