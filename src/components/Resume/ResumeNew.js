@@ -11,7 +11,10 @@ function ResumeNew() {
   const [width, setWidth] = useState(window.innerWidth);
   const [numPages, setNumPages] = useState(null);
   const [loadError, setLoadError] = useState(false);
-  const resumePath = "/Resume.pdf"; // Path to PDF in the public folder
+  const [isDownloading, setIsDownloading] = useState(false);
+  
+  // Use a relative path without PUBLIC_URL to avoid potential path issues
+  const resumePath = "./Resume.pdf";
 
   // Handle window resize
   useEffect(() => {
@@ -37,16 +40,48 @@ function ResumeNew() {
     setLoadError(true);
   };
 
-  // Handle PDF download
-  const handleDownload = () => {
-    // Create a temporary link element
-    const link = document.createElement("a");
-    link.href = resumePath;
-    link.setAttribute("download", "Resume.pdf"); // Suggested filename
-    link.setAttribute("target", "_blank");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // New download method using fetch and Blob
+  const handleBlobDownload = async () => {
+    try {
+      setIsDownloading(true);
+      
+      // Get the file via fetch
+      const response = await fetch(resumePath);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
+      }
+      
+      // Get the PDF as a blob
+      const pdfBlob = await response.blob();
+      
+      // Create a blob URL
+      const blobUrl = window.URL.createObjectURL(pdfBlob);
+      
+      // Create a link and trigger download
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = 'Resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      setTimeout(() => {
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(link);
+        setIsDownloading(false);
+      }, 100);
+      
+    } catch (error) {
+      console.error("Download error:", error);
+      alert("Failed to download the resume. Please try the 'View Resume' button instead.");
+      setIsDownloading(false);
+    }
+  };
+
+  // Direct open in new tab method
+  const handleViewResume = () => {
+    window.open(resumePath, '_blank');
   };
 
   // Render PDF pages or error message
@@ -93,15 +128,41 @@ function ResumeNew() {
           <span style={{ color: "purple" }}>Resume🧑‍💻</span>
         </h1>
 
-        {/* Download Button */}
+        {/* Download Buttons */}
         <div className="text-center mb-4">
           <Button 
             variant="primary" 
-            onClick={handleDownload}
+            onClick={handleBlobDownload}
             size="lg"
-            className="download-button"
+            className="download-button me-2"
+            disabled={isDownloading}
           >
-            <i className="fas fa-download me-2"></i>Download Resume
+            {isDownloading ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                  className="me-2"
+                />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <i className="fas fa-download me-2"></i>Download Resume
+              </>
+            )}
+          </Button>
+          
+          <Button 
+            variant="outline-primary" 
+            onClick={handleViewResume}
+            size="lg"
+            className="download-button-alt"
+          >
+            <i className="fas fa-external-link-alt me-2"></i>View Resume
           </Button>
         </div>
 
