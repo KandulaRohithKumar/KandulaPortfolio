@@ -4,7 +4,6 @@ import Particle from "../Particle";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
-// Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function ResumeNew() {
@@ -13,65 +12,43 @@ function ResumeNew() {
   const [loadError, setLoadError] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   
-  // Use a relative path without PUBLIC_URL to avoid potential path issues
   const resumePath = "./Resume.pdf";
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Memoized PDF scale calculation
-  const pageScale = useMemo(() => {
-    return width > 786 ? 1.7 : 0.6;
-  }, [width]);
+  const pageScale = useMemo(() => (width > 786 ? 1.7 : 0.6), [width]);
 
-  // Handle PDF load success
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
     setLoadError(false);
   };
 
-  // Handle PDF load error
   const onDocumentLoadError = (error) => {
     console.error('PDF load error:', error);
     setLoadError(true);
   };
 
-  // New download method using fetch and Blob
   const handleBlobDownload = async () => {
     try {
       setIsDownloading(true);
-      
-      // Get the file via fetch
       const response = await fetch(resumePath);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
-      }
-      
-      // Get the PDF as a blob
+      if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.status}`);
       const pdfBlob = await response.blob();
-      
-      // Create a blob URL
       const blobUrl = window.URL.createObjectURL(pdfBlob);
-      
-      // Create a link and trigger download
       const link = document.createElement('a');
       link.href = blobUrl;
       link.download = 'Resume.pdf';
       document.body.appendChild(link);
       link.click();
-      
-      // Clean up
       setTimeout(() => {
         window.URL.revokeObjectURL(blobUrl);
         document.body.removeChild(link);
         setIsDownloading(false);
       }, 100);
-      
     } catch (error) {
       console.error("Download error:", error);
       alert("Failed to download the resume. Please try the 'View Resume' button instead.");
@@ -79,43 +56,19 @@ function ResumeNew() {
     }
   };
 
-  // Direct open in new tab method
   const handleViewResume = () => {
     window.open(resumePath, '_blank');
   };
 
-  // Render PDF pages or error message
   const renderPdfContent = () => {
     if (loadError) {
-      return (
-        <div className="text-center text-danger my-4">
-          <h4>Unable to Load Resume</h4>
-          <p>There was an issue displaying the PDF. Please try again later.</p>
-        </div>
-      );
+      return <div className="text-center text-danger my-4"><h4>Unable to Load Resume</h4><p>There was an issue displaying the PDF. Please try again later.</p></div>;
     }
-
     if (!numPages) {
-      return (
-        <div className="d-flex justify-content-center align-items-center my-4">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      );
+      return <div className="d-flex justify-content-center align-items-center my-4"><Spinner animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner></div>;
     }
-
     return Array.from(new Array(numPages), (el, index) => (
-      <Page 
-        key={`page_${index + 1}`}
-        pageNumber={index + 1}
-        scale={pageScale}
-        renderTextLayer={false}
-        renderAnnotationLayer={false}
-        onRenderError={(error) => {
-          console.error(`Error rendering page ${index + 1}:`, error);
-        }}
-      />
+      <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={pageScale} renderTextLayer={false} renderAnnotationLayer={false} />
     ));
   };
 
@@ -124,58 +77,24 @@ function ResumeNew() {
       <Container fluid className="resume-section">
         <Particle />
         <h1 style={{ textAlign: "center", fontSize: "3rem" }}>
-          <span style={{ color: "white", fontWeight: "bold" }}>My</span>{" "}
-          <span style={{ color: "purple" }}>Resume🧑‍💻</span>
+          <span style={{ color: "white", fontWeight: "bold" }}>My</span> <span style={{ color: "purple" }}>Resume🧑‍💻</span>
         </h1>
 
-        {/* Download Buttons */}
-        <div className="text-center mb-4">
-          <Button 
-            variant="primary" 
-            onClick={handleBlobDownload}
-            size="lg"
-            className="download-button me-2"
-            disabled={isDownloading}
-          >
-            {isDownloading ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  className="me-2"
-                />
-                Downloading...
-              </>
-            ) : (
-              <>
-                <i className="fas fa-download me-2"></i>Download Resume
-              </>
-            )}
-          </Button>
-          
-          <Button 
-            variant="outline-primary" 
-            onClick={handleViewResume}
-            size="lg"
-            className="download-button-alt"
-          >
-            <i className="fas fa-external-link-alt me-2"></i>View Resume
-          </Button>
-        </div>
-
         <Row className="resume justify-content-center">
-          <Document 
-            file={resumePath}
-            onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={onDocumentLoadError}
-            className="d-flex flex-column align-items-center"
-          >
+          <Document file={resumePath} onLoadSuccess={onDocumentLoadSuccess} onLoadError={onDocumentLoadError} className="d-flex flex-column align-items-center">
             {renderPdfContent()}
           </Document>
         </Row>
+
+        {/* Download Buttons Below Resume */}
+        <div className="text-center mt-4">
+          <Button variant="primary" onClick={handleBlobDownload} size="lg" className="download-button me-2" disabled={isDownloading}>
+            {isDownloading ? (<><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2" />Downloading...</>) : (<> <i className="fas fa-download me-2"></i>Download Resume </>)}
+          </Button>
+          <Button variant="outline-primary" onClick={handleViewResume} size="lg" className="download-button-alt">
+            <i className="fas fa-external-link-alt me-2"></i>View Resume
+          </Button>
+        </div>
       </Container>
     </div>
   );
