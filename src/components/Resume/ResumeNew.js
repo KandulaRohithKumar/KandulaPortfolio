@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Container, Row, Spinner } from "react-bootstrap";
+import { Container, Row, Spinner, Button } from "react-bootstrap";
 import Particle from "../Particle";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -11,6 +11,7 @@ function ResumeNew() {
   const [width, setWidth] = useState(window.innerWidth);
   const [numPages, setNumPages] = useState(null);
   const [loadError, setLoadError] = useState(false);
+  const resumePath = "/Resume.pdf"; // Path to PDF in the public folder
 
   // Handle window resize
   useEffect(() => {
@@ -34,6 +35,18 @@ function ResumeNew() {
   const onDocumentLoadError = (error) => {
     console.error('PDF load error:', error);
     setLoadError(true);
+  };
+
+  // Handle PDF download
+  const handleDownload = () => {
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = resumePath;
+    link.setAttribute("download", "Resume.pdf"); // Suggested filename
+    link.setAttribute("target", "_blank");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   // Render PDF pages or error message
@@ -76,13 +89,25 @@ function ResumeNew() {
       <Container fluid className="resume-section">
         <Particle />
         <h1 style={{ textAlign: "center", fontSize: "3rem" }}>
-  <span style={{ color: "white", fontWeight: "bold" }}>My</span>{" "}
-  <span style={{ color: "purple" }}>Resume🧑‍💻</span>
-</h1>
+          <span style={{ color: "white", fontWeight: "bold" }}>My</span>{" "}
+          <span style={{ color: "purple" }}>Resume🧑‍💻</span>
+        </h1>
+
+        {/* Download Button */}
+        <div className="text-center mb-4">
+          <Button 
+            variant="primary" 
+            onClick={handleDownload}
+            size="lg"
+            className="download-button"
+          >
+            <i className="fas fa-download me-2"></i>Download Resume
+          </Button>
+        </div>
 
         <Row className="resume justify-content-center">
           <Document 
-            file="/resumes.pdf"  // Path to PDF in the public folder
+            file={resumePath}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={onDocumentLoadError}
             className="d-flex flex-column align-items-center"
