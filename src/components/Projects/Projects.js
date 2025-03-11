@@ -26,7 +26,7 @@ function Projects() {
               isBlog={false}
               title="Placement Portal"
               description="Placement Portal is a full-stack web application built using JSP for the frontend and Spring Boot for the backend. The system facilitates seamless placement management, featuring company registrations, job postings, student profiles, and an admin dashboard for managing recruitment activities."
-              ghLink="https://github.com/klu-2200030106/PIS"
+              ghLink="https://github.com/KandulaRohithKumar/PIS"
               demoLink="https://pis-production.up.railway.app/"
             />
           </Col>
@@ -37,7 +37,7 @@ function Projects() {
               isBlog={false}
               title="Quiz App"
               description="A dynamic quiz application built using C# and MySQL, designed for seamless user interaction and robust data management. It enables users to create, take, and evaluate quizzes while securely storing results in a relational database."
-              ghLink="https://github.com/klu-2200030106/OnlineQuiz-VP"
+              ghLink="https://github.com/KandulaRohithKumar/OnlineQuiz-VP"
               // demoLink="https://blogs.soumya-jit.tech/"
             />
           </Col>
@@ -48,7 +48,7 @@ function Projects() {
               isBlog={false}
               title="Food Ordering App"
               description="The Online Food Ordering System is a web application built using Python and the Django framework. It allows users to browse menus, place orders, and make payments online. The system uses PostgreSQL as the database to store user, order, and menu information securely."
-              ghLink="https://github.com/klu-2200030106/Online-Food-Ordering"
+              ghLink="https://github.com/KandulaRohithKumar/Online-Food-Ordering"
               // demoLink="https://editor.soumya-jit.tech/"              
             />
           </Col>
@@ -59,7 +59,7 @@ function Projects() {
               isBlog={false}
               title="EBookStore"
               description="An Online Book Store built using the MERN stack, with a React.js frontend for dynamic and user-friendly interfaces, and a Node.js + Express.js backend for robust APIs, integrated with MongoDB for efficient data storage and management."
-              ghLink="https://github.com/klu-2200030106/SDP1"
+              ghLink="https://github.com/KandulaRohithKumar/MSWD-Project"
               // demoLink="https://plant49-ai.herokuapp.com/"
             />
           </Col>
@@ -72,7 +72,7 @@ function Projects() {
               isBlog={false}
               title="Car Show Room Management"
               description="The Car Showroom Management System is a Java EE project designed to manage the operations of a car showroom efficiently. It is deployed on the Red Hat JBoss EAP Server and uses MySQL for storing data."
-              ghLink="https://github.com/klu-2200030106/Online-Car-Show-Room-Management"
+              ghLink="https://github.com/KandulaRohithKumar/Online-Car-Show-Room-Management"
               // demoLink="https://blogs.soumya-jit.tech/"      <--------Please include a demo link here 
             />
           </Col>
